@@ -1,6 +1,6 @@
 import React from 'react';
 import ChatMessages from './ChatMessages';
-import { $ } from 'jquery';
+import $ from 'jquery';
 import { uuidv4 } from '../Services/randomGuid'
 import {
     JsonHubProtocol,
@@ -43,7 +43,7 @@ class Chatbox extends React.Component {
         });
 
     }
-    sendMessage() {
+    sendMessage(e) {
         var msgValue = $('#msg').val();
         try {
             this.state.connection.invoke("BroadcastMessage", this.state.userId, msgValue);
@@ -56,10 +56,10 @@ class Chatbox extends React.Component {
     render() {
         return (
             <div>
-                <ChatMessages messages={this.props.messagesModel} />
+                <ChatMessages messages={this.state.messages} />
 
-                <input type="text" id="msg" minLength="2" maxLength="256"> </input>
-                <button onClick={(e) => this.sendMessage(e)}></button>
+                <input type="text" id="msg" minLength="2" maxLength="256"/> 
+                <button onClick={(e) => this.sendMessage(e)}>Send Message</button>
             </div>
         )
     }
