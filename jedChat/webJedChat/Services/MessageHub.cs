@@ -11,15 +11,12 @@ namespace jedChat.Services
     {
         public MessageHub()
         {
-
         }
 
-        public Task BroadcastMessage(string user, string message) {
-
+        public Task BroadcastMessage(string user, string message)
+        {
             return Clients.All.SendAsync("ReceiveMessage", user, message);
-        
-        
         }
-        public Task ReceiveMessage() { return; }
+
     }
 }

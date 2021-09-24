@@ -9,6 +9,5 @@ namespace jedChat.Services
     public interface IMessageHub
     {
         Task BroadcastMessage(string user, string message);
-        Task ReceiveMessage();
     }
 }

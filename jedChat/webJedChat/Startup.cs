@@ -14,6 +14,8 @@ namespace webJedChat
 {
     public class Startup
     {
+        private readonly string reactFrontEndClient = "_reactFrontEndClient";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,6 +28,14 @@ namespace webJedChat
         {
             services.AddSignalR();
             services.AddRazorPages();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: reactFrontEndClient,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:3000");
+                                  });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,12 +57,13 @@ namespace webJedChat
 
             app.UseRouting();
 
+            app.UseCors(reactFrontEndClient);
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<MessageHub>("/chathub");
-                endpoints.MapRazorPages();
             });
         }
     }
